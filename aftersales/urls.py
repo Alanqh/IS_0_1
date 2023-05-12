@@ -1,7 +1,6 @@
 from django.urls import path
-
-
-from aftersales.views import aftersales_home, user_info, change_password
+from aftersales.views import aftersales_home
+from customer.views import user_info, change_password
 
 urlpatterns = [
     path('', aftersales_home, name='aftersales_home'),

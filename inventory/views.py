@@ -12,32 +12,6 @@ def inventory_home(request):
     return render(request, 'inventory_home.html')
 
 
-@login_required(login_url='login')
-def user_info(request):
-    user = request.user
-    if request.method == 'POST':
-        form = UserInfoForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('customer_home')
-    else:
-        form = UserInfoForm(instance=user)
-    return render(request, 'user_info.html', {'form': form})
-
-
-@login_required
-def change_password(request):
-    if request.method == 'POST':
-        form = ChangePasswordForm(user=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, '密码已成功修改！')
-            return redirect('index_login')
-    else:
-        form = ChangePasswordForm(user=request.user)
-    return render(request, 'change_password.html', {'form': form})
-
-
 @login_required
 def purchase_product(request):
     if request.method == 'POST':
@@ -79,7 +53,24 @@ def purchase_product(request):
     return render(request, 'purchase_product.html', context)
 
 
-
 @login_required
 def purchase_success(request):
     return render(request, 'purchase_success.html')
+
+
+@login_required
+def inventory_list(request):
+    categories = {'engine': '发动机', 'battery': '电池', 'tire': '轮胎', 'charging pile': '充电桩',
+                  'parts': '其他小配件'}
+    inventory_by_category = {}
+
+    for category_en, category_cn in categories.items():
+        products = InventoryProducts.objects.filter(product__category=category_en)
+        product_list = ProductList.objects.filter(category=category_en)
+
+        inventory_by_category[category_cn] = {
+            'products': products,
+            'other_info': product_list
+        }
+
+    return render(request, 'inventory_list.html', {'inventory_by_category': inventory_by_category})
