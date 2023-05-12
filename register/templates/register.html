@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>注册</title>
+    <script>
+        // 获取角色和部门的元素
+        var role = document.getElementById("id_role");
+        var department = document.getElementById("id_department");
+        // 定义一个函数，根据角色的值来显示或隐藏部门
+        function toggleDepartment() {
+            if (role.value === "staff") {
+                department.style.display = "block";
+            } else {
+                department.style.display = "none";
+            }
+        }
+        // 给角色添加一个事件监听器，当值改变时调用函数
+        role.addEventListener("change", toggleDepartment);
+        // 页面加载时调用一次函数
+        window.onload = toggleDepartment;
+    </script>
+</head>
+<body>
+    <h1>注册</h1>
+    <!-- 使用Django的模板语言来渲染表单和错误信息 -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="注册">
+    </form>
+</body>
+</html>
