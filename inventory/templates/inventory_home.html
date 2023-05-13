@@ -18,12 +18,6 @@
                 <a class="nav-link" href="{% url 'change_password' %}">修改密码</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">售后服务进度查询</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">库存变化记录查询</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">退出登录</a>
               </li>
             </ul>
@@ -42,6 +36,12 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'inventory_list' %}">库存查询</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'service_records' %}">售后服务记录查询</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'inventory_change_list' %}">库存变化记录查询</a>
               </li>
             </ul>
         </div>

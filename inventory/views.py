@@ -1,8 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.checks import messages
 from django.contrib import messages
-from customer.forms import UserInfoForm, ChangePasswordForm
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from .models import ProductList, InventoryProducts, PurchaseOrder, InventoryChange
 from .forms import PurchaseForm
 
@@ -74,3 +73,9 @@ def inventory_list(request):
         }
 
     return render(request, 'inventory_list.html', {'inventory_by_category': inventory_by_category})
+
+
+@login_required
+def inventory_change_list(request):
+    inventory_changes = InventoryChange.objects.all().order_by('-timestamp')
+    return render(request, 'inventory_change_list.html', {'inventory_changes': inventory_changes})
